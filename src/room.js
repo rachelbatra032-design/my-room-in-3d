@@ -46,13 +46,99 @@ function cyl(rTop, rBot, h, color, x, y, z, rx = 0) {
   return mesh
 }
 
-function addBooks(parent, x, y, z, count = 5) {
+function addBooks(parent, x, y, z, count = 5, along = 'x') {
   const colors = [0x6b4f3a, 0x355c7d, 0xb85c38, 0x2f4a3a, 0xc4a574, 0x4a3f55]
   for (let i = 0; i < count; i++) {
-    parent.add(
-      box(0.07, 0.18 + (i % 3) * 0.03, 0.14, colors[i % colors.length], x + i * 0.085, y, z)
-    )
+    const h = 0.16 + (i % 3) * 0.025
+    const px = along === 'x' ? x + i * 0.08 : x
+    const pz = along === 'z' ? z + i * 0.08 : z
+    parent.add(box(along === 'x' ? 0.065 : 0.13, h, along === 'x' ? 0.13 : 0.065, colors[i % colors.length], px, y, pz))
   }
+}
+
+function trophy(parent, x, y, z, color = 0xd4af37) {
+  parent.add(cyl(0.012, 0.012, 0.16, color, x, y + 0.08, z))
+  parent.add(box(0.05, 0.02, 0.05, color, x, y + 0.17, z))
+  parent.add(box(0.04, 0.015, 0.04, 0x5a4632, x, y, z))
+}
+
+function makeCornerBookshelf() {
+  const g = new THREE.Group()
+  const white = palette.white
+  const t = 0.05
+
+  // Floor-standing L: back arm along X, return arm toward the room along Z.
+  g.add(box(1.28, 2.22, 0.03, white, 0.64, 1.2, 0.01))
+  g.add(box(0.04, 2.22, 0.58, white, 0.02, 1.2, 0.3))
+  g.add(box(0.04, 2.22, 0.34, white, 0.4, 1.2, 0.18))
+  g.add(box(0.04, 2.22, 0.34, white, 1.26, 1.2, 0.18))
+
+  g.add(box(1.28, t, 0.34, white, 0.64, 2.29, 0.18))
+  g.add(box(0.4, t, 0.28, white, 0.2, 2.29, 0.46))
+
+  g.add(box(0.86, t, 0.34, white, 0.83, 1.78, 0.18))
+  addBooks(g, 0.52, 1.9, 0.2, 5)
+  addBooks(g, 0.96, 1.9, 0.2, 4)
+
+  g.add(box(0.86, 0.07, 0.34, white, 0.83, 1.18, 0.18))
+  g.add(box(0.4, 0.07, 0.58, white, 0.2, 1.18, 0.3))
+  g.add(box(0.28, 0.04, 0.2, palette.paper, 0.72, 1.24, 0.2))
+  g.add(box(0.16, 0.08, 0.14, 0xe39aaa, 1.02, 1.26, 0.2))
+  addBooks(g, 0.08, 1.32, 0.18, 3, 'z')
+
+  g.add(box(0.86, t, 0.34, white, 0.83, 0.22, 0.18))
+  g.add(box(0.4, t, 0.58, white, 0.2, 0.22, 0.3))
+  addBooks(g, 0.55, 0.34, 0.2, 6)
+  g.add(box(0.16, 0.12, 0.12, 0xe8e0d0, 1.1, 0.3, 0.2))
+
+  trophy(g, 0.18, 2.34, 0.22)
+  trophy(g, 0.3, 2.34, 0.22, 0xc0c0c0)
+  trophy(g, 0.55, 2.34, 0.22)
+  trophy(g, 0.68, 2.34, 0.22, 0xc0c0c0)
+  trophy(g, 0.95, 2.34, 0.22)
+  g.add(box(0.16, 0.12, 0.02, palette.paper, 1.16, 2.42, 0.04))
+
+  g.add(box(0.1, 0.42, 0.03, palette.clothesRed, 0.42, 1.85, 0.36))
+  return g
+}
+
+function makePrinterCart() {
+  const g = new THREE.Group()
+  g.add(box(0.52, 0.04, 0.4, palette.wood, 0, 0.92, 0))
+  g.add(box(0.52, 0.04, 0.4, palette.wood, 0, 0.52, 0))
+  g.add(box(0.04, 0.9, 0.04, palette.wood, -0.22, 0.47, -0.16))
+  g.add(box(0.04, 0.9, 0.04, palette.wood, 0.22, 0.47, -0.16))
+  g.add(box(0.04, 0.9, 0.04, palette.wood, -0.22, 0.47, 0.16))
+  g.add(box(0.04, 0.9, 0.04, palette.wood, 0.22, 0.47, 0.16))
+  g.add(box(0.44, 0.025, 0.32, 0x2f6f72, 0, 0.95, 0))
+  g.add(box(0.36, 0.14, 0.26, 0x1b1b1b, 0, 1.04, 0))
+  g.add(box(0.4, 0.04, 0.08, 0x2a2a2a, 0, 1.13, -0.02))
+  g.add(box(0.28, 0.03, 0.22, palette.paper, 0, 0.56, 0))
+  return g
+}
+
+function makeLeftWindow(x, z) {
+  const g = new THREE.Group()
+  g.add(box(1.35, 2.35, 0.03, palette.sky, x, 1.55, z))
+  const sheer = box(1.05, 2.3, 0.02, palette.sheer, x - 0.08, 1.52, z + 0.03, {
+    transparent: true,
+    opacity: 0.55,
+    roughness: 0.95,
+  })
+  sheer.castShadow = false
+  g.add(sheer)
+  g.add(box(0.62, 2.45, 0.07, palette.curtain, x + 0.42, 1.5, z + 0.06))
+  g.add(box(1.5, 0.035, 0.035, palette.woodDark, x, 2.78, z + 0.02))
+  return g
+}
+
+function makeRightWindow(x, z) {
+  const g = new THREE.Group()
+  g.add(box(1.15, 2.2, 0.03, palette.sky, x, 1.6, z))
+  g.add(box(0.58, 2.4, 0.07, palette.curtain, x - 0.28, 1.52, z + 0.05))
+  g.add(box(0.58, 2.4, 0.07, palette.curtainRust, x + 0.3, 1.52, z + 0.05))
+  g.add(box(1.35, 0.035, 0.035, palette.woodDark, x, 2.76, z + 0.02))
+  return g
 }
 
 function makeLaptop(x, y, z, open = true) {
@@ -87,20 +173,6 @@ function makeChair() {
   return chair
 }
 
-function makeCurtainPair(x, z) {
-  const group = new THREE.Group()
-  group.add(box(0.42, 2.55, 0.06, palette.curtain, x - 0.55, 1.55, z))
-  group.add(box(0.42, 2.55, 0.06, palette.curtainRust, x + 0.55, 1.55, z))
-  group.add(box(1.7, 0.04, 0.04, palette.woodDark, x, 2.86, z - 0.02))
-  const sheer = box(0.85, 2.5, 0.02, palette.sheer, x, 1.52, z + 0.02, {
-    transparent: true,
-    opacity: 0.42,
-    roughness: 0.95,
-  })
-  sheer.castShadow = false
-  group.add(sheer)
-  return group
-}
 
 export function createRoom(scene) {
   const room = new THREE.Group()
@@ -111,45 +183,31 @@ export function createRoom(scene) {
   room.add(box(0.1, 3.25, 7.2, palette.wall, -3.75, 1.72, 0.1))
   room.add(box(0.1, 3.25, 5.2, palette.wall, 3.75, 1.72, -0.9))
 
-  // Back wall: two windows, corner shelves, printer.
-  const windowL = box(1.15, 2.2, 0.04, palette.sky, -1.55, 1.7, -3.44)
-  const windowR = box(1.15, 2.2, 0.04, palette.sky, 1.85, 1.7, -3.44)
-  room.add(windowL, windowR)
-  room.add(makeCurtainPair(-1.55, -3.42))
-  room.add(makeCurtainPair(1.85, -3.42))
+  // Back corner: left window, tall wood column, L bookshelf, printer, right window.
+  room.add(makeLeftWindow(-1.72, -3.44))
+  room.add(makeRightWindow(1.92, -3.44))
 
-  const windowLightL = new THREE.RectAreaLight(0xfff4e0, 8, 1.1, 2.1)
-  windowLightL.position.set(-1.55, 1.7, -3.4)
-  windowLightL.lookAt(-1.55, 1.4, 0)
+  const windowLightL = new THREE.RectAreaLight(0xfff4e0, 8, 1.2, 2.2)
+  windowLightL.position.set(-1.72, 1.55, -3.4)
+  windowLightL.lookAt(-1.72, 1.3, 0)
   room.add(windowLightL)
-  const windowLightR = new THREE.RectAreaLight(0xfff4e0, 6, 1.1, 2.1)
-  windowLightR.position.set(1.85, 1.7, -3.4)
-  windowLightR.lookAt(1.85, 1.4, 0)
+  const windowLightR = new THREE.RectAreaLight(0xfff4e0, 5, 1.1, 2.1)
+  windowLightR.position.set(1.92, 1.6, -3.4)
+  windowLightR.lookAt(1.92, 1.3, 0)
   room.add(windowLightR)
 
-  room.add(box(0.42, 3.05, 0.42, palette.wood, -0.28, 1.62, -3.22))
-  room.add(box(0.28, 0.22, 0.04, palette.paper, -0.28, 3.08, -3.0))
+  room.add(box(0.4, 2.48, 0.38, 0xd2c4ae, -0.22, 1.29, -3.26))
+  room.add(box(0.16, 0.22, 0.02, palette.paper, -0.22, 2.64, -3.06))
+  room.add(box(0.22, 0.26, 0.02, palette.frame, -0.08, 1.95, -3.06))
+  room.add(box(0.18, 0.22, 0.01, palette.paper, -0.08, 1.95, -3.04))
 
-  room.add(box(1.55, 0.05, 0.42, palette.white, 0.72, 2.55, -3.18))
-  room.add(box(0.05, 1.55, 0.42, palette.white, 0.08, 1.78, -3.18))
-  room.add(box(0.05, 1.55, 0.42, palette.white, 0.72, 1.78, -3.18))
-  room.add(box(0.05, 1.55, 0.42, palette.white, 1.36, 1.78, -3.18))
-  room.add(box(1.55, 0.05, 0.42, palette.white, 0.72, 1.95, -3.18))
-  room.add(box(1.55, 0.05, 0.42, palette.white, 0.72, 1.0, -3.18))
-  addBooks(room, 0.2, 2.18, -3.18, 6)
-  addBooks(room, 0.85, 2.18, -3.18, 5)
-  addBooks(room, 0.25, 1.18, -3.18, 7)
-  room.add(box(0.08, 0.28, 0.08, 0xd4af37, 0.55, 2.72, -3.05))
-  room.add(box(0.08, 0.22, 0.08, 0xc0c0c0, 0.7, 2.69, -3.05))
-  room.add(box(0.08, 0.26, 0.08, 0xd4af37, 1.05, 2.71, -3.05))
-  room.add(box(0.12, 0.42, 0.04, palette.clothesRed, 0.42, 2.22, -3.0))
+  const shelves = makeCornerBookshelf()
+  shelves.position.set(0.02, 0.08, -3.46)
+  room.add(shelves)
 
-  room.add(box(0.55, 0.05, 0.42, palette.wood, -0.28, 0.92, -2.85))
-  room.add(box(0.55, 0.05, 0.42, palette.wood, -0.28, 0.55, -2.85))
-  room.add(cyl(0.03, 0.03, 0.9, palette.wood, -0.46, 0.5, -2.7))
-  room.add(cyl(0.03, 0.03, 0.9, palette.wood, -0.1, 0.5, -2.7))
-  room.add(box(0.42, 0.03, 0.32, 0x2a6b6e, -0.28, 0.96, -2.85))
-  room.add(box(0.36, 0.16, 0.28, 0x1a1a1a, -0.28, 1.06, -2.85))
+  const printer = makePrinterCart()
+  printer.position.set(-0.08, 0, -2.88)
+  room.add(printer)
 
   // Left wall: photo board, wardrobe, desk.
   room.add(box(0.04, 0.55, 1.15, palette.wood, -3.66, 1.85, 1.85))

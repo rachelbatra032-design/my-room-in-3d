@@ -18,7 +18,7 @@ const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x2a2622)
 
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 60)
-camera.position.set(1.4, 5.9, 9.4)
+camera.position.set(0.8, 4.8, 7.6)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
