@@ -18,7 +18,7 @@ const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x2a2622)
 
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 60)
-camera.position.set(8.6, 5.6, 8.4)
+camera.position.set(1.4, 5.9, 9.4)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
@@ -26,7 +26,7 @@ controls.dampingFactor = 0.06
 controls.minDistance = 6
 controls.maxDistance = 18
 controls.maxPolarAngle = Math.PI / 2.08
-controls.target.set(0, 1.15, -0.2)
+controls.target.set(0.1, 1.15, -0.5)
 
 scene.add(new THREE.AmbientLight(0xfff6ea, 0.62))
 const sun = new THREE.DirectionalLight(0xfff3dd, 1.2)
