@@ -67,38 +67,38 @@ function makeCornerBookshelf() {
   const white = palette.white
   const t = 0.05
 
-  // Floor-standing L: back arm along X, return arm toward the room along Z.
-  g.add(box(1.28, 2.22, 0.03, white, 0.64, 1.2, 0.01))
-  g.add(box(0.04, 2.22, 0.58, white, 0.02, 1.2, 0.3))
-  g.add(box(0.04, 2.22, 0.34, white, 0.4, 1.2, 0.18))
-  g.add(box(0.04, 2.22, 0.34, white, 1.26, 1.2, 0.18))
+  // Floor-standing L: long arm on the back wall, short arm coming into the room.
+  g.add(box(1.32, 2.28, 0.03, white, 0.66, 1.2, 0.01))
+  g.add(box(0.05, 2.28, 0.95, white, 0.03, 1.2, 0.48))
+  g.add(box(0.05, 2.28, 0.36, white, 0.42, 1.2, 0.19))
+  g.add(box(0.05, 2.28, 0.36, white, 1.28, 1.2, 0.19))
 
-  g.add(box(1.28, t, 0.34, white, 0.64, 2.29, 0.18))
-  g.add(box(0.4, t, 0.28, white, 0.2, 2.29, 0.46))
+  g.add(box(1.32, t, 0.36, white, 0.66, 2.32, 0.19))
+  g.add(box(0.44, t, 0.62, white, 0.22, 2.32, 0.66))
 
-  g.add(box(0.86, t, 0.34, white, 0.83, 1.78, 0.18))
-  addBooks(g, 0.52, 1.9, 0.2, 5)
-  addBooks(g, 0.96, 1.9, 0.2, 4)
+  g.add(box(0.86, t, 0.36, white, 0.85, 1.8, 0.19))
+  addBooks(g, 0.54, 1.92, 0.2, 5)
+  addBooks(g, 0.98, 1.92, 0.2, 4)
 
-  g.add(box(0.86, 0.07, 0.34, white, 0.83, 1.18, 0.18))
-  g.add(box(0.4, 0.07, 0.58, white, 0.2, 1.18, 0.3))
-  g.add(box(0.28, 0.04, 0.2, palette.paper, 0.72, 1.24, 0.2))
-  g.add(box(0.16, 0.08, 0.14, 0xe39aaa, 1.02, 1.26, 0.2))
-  addBooks(g, 0.08, 1.32, 0.18, 3, 'z')
+  g.add(box(0.86, 0.08, 0.36, white, 0.85, 1.16, 0.19))
+  g.add(box(0.44, 0.08, 0.95, white, 0.22, 1.16, 0.48))
+  g.add(box(0.28, 0.04, 0.2, palette.paper, 0.74, 1.23, 0.22))
+  g.add(box(0.16, 0.08, 0.14, 0xe39aaa, 1.04, 1.25, 0.22))
+  addBooks(g, 0.12, 1.3, 0.22, 4, 'z')
 
-  g.add(box(0.86, t, 0.34, white, 0.83, 0.22, 0.18))
-  g.add(box(0.4, t, 0.58, white, 0.2, 0.22, 0.3))
-  addBooks(g, 0.55, 0.34, 0.2, 6)
-  g.add(box(0.16, 0.12, 0.12, 0xe8e0d0, 1.1, 0.3, 0.2))
+  g.add(box(0.86, t, 0.36, white, 0.85, 0.2, 0.19))
+  g.add(box(0.44, t, 0.95, white, 0.22, 0.2, 0.48))
+  addBooks(g, 0.56, 0.32, 0.2, 6)
+  g.add(box(0.16, 0.12, 0.12, 0xe8e0d0, 1.12, 0.28, 0.2))
 
-  trophy(g, 0.18, 2.34, 0.22)
-  trophy(g, 0.3, 2.34, 0.22, 0xc0c0c0)
-  trophy(g, 0.55, 2.34, 0.22)
-  trophy(g, 0.68, 2.34, 0.22, 0xc0c0c0)
-  trophy(g, 0.95, 2.34, 0.22)
-  g.add(box(0.16, 0.12, 0.02, palette.paper, 1.16, 2.42, 0.04))
+  trophy(g, 0.16, 2.37, 0.28)
+  trophy(g, 0.28, 2.37, 0.28, 0xc0c0c0)
+  trophy(g, 0.54, 2.37, 0.22)
+  trophy(g, 0.68, 2.37, 0.22, 0xc0c0c0)
+  trophy(g, 0.96, 2.37, 0.22)
+  g.add(box(0.16, 0.12, 0.02, palette.paper, 1.18, 2.46, 0.04))
 
-  g.add(box(0.1, 0.42, 0.03, palette.clothesRed, 0.42, 1.85, 0.36))
+  g.add(box(0.1, 0.42, 0.03, palette.clothesRed, 0.44, 1.86, 0.4))
   return g
 }
 
@@ -196,17 +196,18 @@ export function createRoom(scene) {
   windowLightR.lookAt(1.92, 1.3, 0)
   room.add(windowLightR)
 
-  room.add(box(0.4, 2.48, 0.38, 0xd2c4ae, -0.22, 1.29, -3.26))
-  room.add(box(0.16, 0.22, 0.02, palette.paper, -0.22, 2.64, -3.06))
-  room.add(box(0.22, 0.26, 0.02, palette.frame, -0.08, 1.95, -3.06))
-  room.add(box(0.18, 0.22, 0.01, palette.paper, -0.08, 1.95, -3.04))
+  room.add(box(0.42, 2.5, 0.4, 0xd2c4ae, -0.18, 1.3, -3.24))
+  room.add(box(0.18, 0.22, 0.02, palette.paper, -0.18, 2.66, -3.02))
+  room.add(box(0.22, 0.26, 0.02, palette.frame, -0.04, 1.96, -3.02))
+  room.add(box(0.18, 0.22, 0.01, palette.paper, -0.04, 1.96, -3.0))
+  room.add(box(0.55, 0.05, 0.4, palette.white, -0.12, 2.56, -3.22))
 
   const shelves = makeCornerBookshelf()
-  shelves.position.set(0.02, 0.08, -3.46)
+  shelves.position.set(-0.02, 0.08, -3.46)
   room.add(shelves)
 
   const printer = makePrinterCart()
-  printer.position.set(-0.08, 0, -2.88)
+  printer.position.set(-0.16, 0, -2.78)
   room.add(printer)
 
   // Left wall: photo board, wardrobe, desk.
