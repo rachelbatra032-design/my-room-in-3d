@@ -12,31 +12,30 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.shadowMap.enabled = true
 renderer.toneMapping = THREE.ACESFilmicToneMapping
-renderer.toneMappingExposure = 1.05
+renderer.toneMappingExposure = 1.12
 
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x1b1714)
+scene.background = new THREE.Color(0x2a2622)
 
-const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 50)
-camera.position.set(7.4, 5.2, 7.8)
+const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 60)
+camera.position.set(8.6, 5.6, 8.4)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.dampingFactor = 0.06
-controls.minDistance = 5
-controls.maxDistance = 16
-controls.maxPolarAngle = Math.PI / 2.05
-controls.target.set(0, 1.1, 0)
+controls.minDistance = 6
+controls.maxDistance = 18
+controls.maxPolarAngle = Math.PI / 2.08
+controls.target.set(0, 1.15, -0.2)
 
-scene.add(new THREE.AmbientLight(0xfff4e5, 0.45))
-const sun = new THREE.DirectionalLight(0xfff1d6, 1.15)
-sun.position.set(4, 8, 3)
+scene.add(new THREE.AmbientLight(0xfff6ea, 0.62))
+const sun = new THREE.DirectionalLight(0xfff3dd, 1.2)
+sun.position.set(3.5, 8.5, 4)
 sun.castShadow = true
 sun.shadow.mapSize.set(1024, 1024)
 scene.add(sun)
 
-const { laptop, screen } = createRoom(scene)
-const screenMaterial = screen.material
+const { laptops, screens } = createRoom(scene)
 let screenOn = true
 
 const raycaster = new THREE.Raycaster()
@@ -50,17 +49,19 @@ function setPointer(event) {
 window.addEventListener('pointermove', (event) => {
   setPointer(event)
   raycaster.setFromCamera(pointer, camera)
-  const hits = raycaster.intersectObject(laptop, true)
+  const hits = raycaster.intersectObject(laptops, true)
   document.body.style.cursor = hits.length ? 'pointer' : 'default'
 })
 
 window.addEventListener('click', (event) => {
   setPointer(event)
   raycaster.setFromCamera(pointer, camera)
-  if (!raycaster.intersectObject(laptop, true).length) return
+  if (!raycaster.intersectObject(laptops, true).length) return
   screenOn = !screenOn
-  screenMaterial.color.set(screenOn ? 0x8ec8c4 : 0x1a1f22)
-  screenMaterial.emissive = new THREE.Color(screenOn ? 0x244844 : 0x000000)
+  for (const screen of screens) {
+    screen.material.color.set(screenOn ? 0x8ec8c4 : 0x1a1f22)
+    screen.material.emissive = new THREE.Color(screenOn ? 0x244844 : 0x000000)
+  }
 })
 
 window.addEventListener('resize', () => {

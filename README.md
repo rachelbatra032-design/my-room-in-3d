@@ -4,7 +4,7 @@ A room you can orbit, zoom, and click. Inspired by [Bruno Simon’s my-room-in-3
 
 Live: https://rachelbatra032-design.github.io/my-room-in-3d/
 
-The first version is a stand-in. The next pass replaces these boxes with a Blender model of my actual room.
+This pass is a low-poly stand-in of my room from photos: desk wall, window corner with shelves, bed, and the photo board. A later pass can replace the boxes with a Blender model.
 
 ## Local
 
